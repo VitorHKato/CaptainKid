@@ -4,8 +4,7 @@ export default class Bombs {
     constructor(scene) {
         this.#bombs = scene.physics.add.group()
     }
-
-
+    
     get bombs() {
         return this.#bombs;
     }

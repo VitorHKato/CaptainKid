@@ -2,6 +2,7 @@ import Player from './player.js'
 import Phase from "./phase.js"
 import Stars from "./stars.js"
 import Bombs from "./bombs.js"
+import Jailson from "./jailson.js";
 
 export default class Game extends Phaser.Scene
 {
@@ -11,6 +12,8 @@ export default class Game extends Phaser.Scene
         Player.loadSprite(this)
         Stars.loadAsset(this)
         Bombs.loadAsset(this)
+
+        Jailson.loadSprite(this)
     }
 
     create ()
@@ -19,6 +22,8 @@ export default class Game extends Phaser.Scene
         this.player = new Player(this, 100, 450)
         this.stars = new Stars(this)
         this.bombs = new Bombs(this)
+
+        this.jailson = new Jailson(this, 200, 450)
 
         function collectStar(player, star) {
             star.disableBody(true, true)
@@ -49,10 +54,13 @@ export default class Game extends Phaser.Scene
         this.physics.add.collider(this.bombs.bombs, this.phase.platforms)
         this.physics.add.collider(this.player.sprite, this.bombs.bombs, hitBomb, null, this)
 
+        this.physics.add.collider(this.jailson.sprite, this.phase.platforms)
+
     }
 
     update(time, delta) {
         this.player.move()
+        this.jailson.move(this.player)
     }
 
 }
