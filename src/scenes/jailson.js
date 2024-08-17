@@ -1,5 +1,8 @@
+import Orange from "./orange.js";
+
 export default class Jailson {
     #sprite
+    #orange
 
     constructor(scene, x, y) {
         this.#sprite = scene.physics.add.sprite(x, y, 'jailson')
@@ -8,6 +11,8 @@ export default class Jailson {
         this.scene = scene;
 
         this.#sprite.setScale(0.6)
+
+        this.#orange = new Orange(scene)
 
         this.messageBox = null
         this.messageCounter = 0
@@ -23,6 +28,14 @@ export default class Jailson {
 
     set sprite(value) {
         this.#sprite = value;
+    }
+
+    get orange() {
+        return this.#orange;
+    }
+
+    set orange(value) {
+        this.#orange = value;
     }
 
     static loadSprite(scene) {
@@ -82,6 +95,10 @@ export default class Jailson {
                 this.messageBox.setText(messages[this.messageCounter])
                 this.playerClose = true
                 this.messageCounter += 1
+
+                if (this.messageCounter === 5) {
+                    this.orange.createOrange(this)
+                }
             }
         } else {
             this.messageBox.setVisible(false)

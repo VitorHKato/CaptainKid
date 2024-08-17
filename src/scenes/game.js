@@ -3,6 +3,7 @@ import Phase from "./phase.js"
 import Stars from "./stars.js"
 import Bombs from "./bombs.js"
 import Jailson from "./jailson.js";
+import Orange from "./orange.js";
 
 export default class Game extends Phaser.Scene
 {
@@ -14,6 +15,7 @@ export default class Game extends Phaser.Scene
         Bombs.loadAsset(this)
 
         Jailson.loadSprite(this)
+        Orange.loadAsset(this)
     }
 
     create ()
@@ -55,6 +57,7 @@ export default class Game extends Phaser.Scene
         this.physics.add.collider(this.player.sprite, this.bombs.bombs, hitBomb, null, this)
 
         this.physics.add.collider(this.jailson.sprite, this.phase.platforms)
+        this.physics.add.collider(this.jailson.orange.orange, this.phase.platforms)
 
     }
 
