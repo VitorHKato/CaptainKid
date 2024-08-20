@@ -4,6 +4,7 @@ import Stars from "./stars.js"
 import Bombs from "./bombs.js"
 import Jailson from "./jailson.js";
 import Orange from "./orange.js";
+import GhostPirate from "./ghostPirate.js";
 
 export default class Game extends Phaser.Scene
 {
@@ -11,21 +12,27 @@ export default class Game extends Phaser.Scene
     {
         Phase.loadAssets(this)
         Player.loadSprite(this)
+
         Stars.loadAsset(this)
         Bombs.loadAsset(this)
 
         Jailson.loadSprite(this)
         Orange.loadAsset(this)
+
+        GhostPirate.loadSprite(this)
     }
 
     create ()
     {
         this.phase = new Phase(this)
         this.player = new Player(this, 100, 450)
+
         this.stars = new Stars(this)
         this.bombs = new Bombs(this)
 
         this.jailson = new Jailson(this, 200, 450)
+
+        this.ghostPirate = new GhostPirate(this, 400, 200)
 
         function collectStar(player, star) {
             star.disableBody(true, true)
@@ -48,6 +55,13 @@ export default class Game extends Phaser.Scene
             let gameOver = true
         }
 
+        function hitGhostPirate(player) {
+            this.physics.pause()
+            player.setTint(0xff000)
+            player.anims.play('turn')
+            let gameOver = true
+        }
+
         this.physics.add.collider(this.player.sprite, this.phase.platforms)
 
         this.physics.add.collider(this.stars.stars, this.phase.platforms)
@@ -59,11 +73,14 @@ export default class Game extends Phaser.Scene
         this.physics.add.collider(this.jailson.sprite, this.phase.platforms)
         this.physics.add.collider(this.jailson.orange.orange, this.phase.platforms)
 
+        this.physics.add.collider(this.player.sprite, this.ghostPirate.sprite, hitGhostPirate, null, this)
+
     }
 
     update(time, delta) {
         this.player.move()
         this.jailson.move(this.player)
+        this.ghostPirate.move(this.player)
     }
 
 }
