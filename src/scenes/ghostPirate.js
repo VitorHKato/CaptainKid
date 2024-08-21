@@ -10,6 +10,7 @@ export default class GhostPirate {
 
         this.#sprite.setSize(14, 16)
         this.#sprite.setOffset(- 1, - 3)
+        this.#sprite.setCollideWorldBounds(true)
 
         this.createAnimations()
     }
