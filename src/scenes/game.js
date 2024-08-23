@@ -6,6 +6,7 @@ import Jailson from "./jailson.js";
 import Orange from "./orange.js";
 import GhostPirate from "./ghostPirate.js";
 import JumpingPirate from "./jumpingPirate.js";
+import CaptainGuina from "./captainGuina.js";
 
 export default class Game extends Phaser.Scene
 {
@@ -23,6 +24,8 @@ export default class Game extends Phaser.Scene
         GhostPirate.loadSprite(this)
 
         JumpingPirate.loadSprite(this)
+
+        CaptainGuina.loadSprite(this)
     }
 
     create ()
@@ -38,6 +41,8 @@ export default class Game extends Phaser.Scene
         this.ghostPirate = new GhostPirate(this, 400, 200)
 
         this.jumpingPirate = new JumpingPirate(this, 100, 100)
+
+        this.captainGuina = new CaptainGuina(this, 300, 450)
 
         function collectStar(player, star) {
             star.disableBody(true, true)
@@ -83,6 +88,8 @@ export default class Game extends Phaser.Scene
         this.physics.add.collider(this.jumpingPirate.sprite, this.phase.platforms)
         this.physics.add.collider(this.player.sprite, this.jumpingPirate.sprite, hitGhostPirate, null, this)
 
+        this.physics.add.collider(this.captainGuina.sprite, this.phase.platforms)
+        this.physics.add.collider(this.player.sprite, this.captainGuina.sprite, hitGhostPirate, null, this)
     }
 
     update(time, delta) {
@@ -90,6 +97,7 @@ export default class Game extends Phaser.Scene
         this.jailson.move(this.player)
         this.ghostPirate.move(this.player)
         this.jumpingPirate.move()
+        this.captainGuina.move(this.player)
     }
 
 }
